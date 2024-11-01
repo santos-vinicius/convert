@@ -8,6 +8,7 @@ const form = document.querySelector("form")
 const amount = document.getElementById("amount")
 const currency = document.getElementById("currency")
 const footer = document.querySelector("main footer")
+const description =  document.getElementById("description")
 
 // Manipulando o input amount para receber somente números.
 amount.addEventListener("input", () => {
@@ -36,6 +37,9 @@ form.onsubmit = (event) => {
 // Função para converter a moeda. 
 function convertCurrency(amount, price, symbol) {
   try {
+    // Exibindo valor da cotação da moeda selecionada
+    description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`
+
     // Aplica a classe que exibe o footer pare mostrar o resultado
     footer.classList.add("show-result")
   } catch (error) {
@@ -45,4 +49,13 @@ function convertCurrency(amount, price, symbol) {
     console.log(error)
     alert("Não foi possível converter. Tente novamente mais tarde")
   }
+}
+
+// Conversão formatada da moeda para Real Brasileiro
+function formatCurrencyBRL(value) {
+  // Converte para número para utilizar o toLocaleString para usar o BRL no currency
+  return Number(value).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  })
 }
